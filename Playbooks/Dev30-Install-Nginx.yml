@@ -6,7 +6,7 @@
   become_user: root
   tasks:
 - name: Perform Apt Update
-  shell: apt update
+  shell: apt update -y
 
 - name: Install Nginx
   shell: apt install -y nginx 
