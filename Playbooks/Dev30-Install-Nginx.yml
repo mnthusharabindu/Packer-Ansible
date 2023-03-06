@@ -12,7 +12,7 @@
       shell: apt install -y nginx
 
     - name: Start Nginx Service
-      shell: Service Nginx start
+      shell: service nginx start
 
     - name: Delete Existing File
       shell: rm -rf /tmp/passwd
