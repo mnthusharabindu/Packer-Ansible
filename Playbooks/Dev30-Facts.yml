@@ -3,7 +3,7 @@
   gather_facts: yes
   become: yes
   become_user: root
-  serial: 1
+  #serial: 1
   vars:
    custom_heading: "Welcome To DevOps Training B30 By Sreeharsha Veerapalli - Testing VARs"
    todays_date: "{{ ansible_facts['date_time']['date'] }}"
@@ -16,30 +16,26 @@
   - name: ip_address Facts
     ansible.builtin.debug:
       msg: "{{ ip_address }}"
-      verbosity: 1
-    # no_log: True
+         # no_log: True
 
   - name: host_name Facts
     ansible.builtin.debug:
       msg: "{{ host_name }}"
-      verbosity: 2
-    # no_log: True
+         # no_log: True
 
   - name: fqdn_name Facts
     ansible.builtin.debug:
       msg: "{{ fqdn_name }}"
-      verbosity: 3
-    # no_log: True
+         # no_log: True
 
   - name: os_family Facts
     ansible.builtin.debug:
       msg: "{{ os_family }}"
-      verbosity: 4
-    # no_log: True
+          # no_log: True
 
   - name: print inventory_hostname
     ansible.builtin.debug:
       msg: "{{ inventory_hostname }}"
-      verbosity: 5
+      
  
   
