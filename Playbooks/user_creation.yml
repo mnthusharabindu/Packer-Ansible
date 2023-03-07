@@ -8,7 +8,7 @@
     os1family: "Debian"
     os2family: "RedHat"
   tasks:
-  - name: Create adminuser1
+  - name: Create adminusers
     user:
       name: "{{item}}"
       state: "present"
