@@ -13,4 +13,4 @@
       insertafter: '127.0.0.1 localhost'
       marker: "#Hostfile Updated By Ansibleadmin"       
       block: |
-       {{ ip_address}} {{ inventory_hostname }} {{ inventory_hostname }}.local
+       "{{ ip_address}}" "{{ inventory_hostname }}" "{{ inventory_hostname }}.local"
