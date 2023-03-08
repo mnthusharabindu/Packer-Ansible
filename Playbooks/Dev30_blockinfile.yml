@@ -1,0 +1,15 @@
+---
+- hosts: pvt
+  gather_facts: yes
+  become: yes
+  become_user: root
+  tasks:
+   - name: Copy New Hosts File
+     file: 
+       src: hosts
+       dest: /etc/hosts
+       owner: root
+       group: root
+       mode: '0644'
+       state: file 
+     
