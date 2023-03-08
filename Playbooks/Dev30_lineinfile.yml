@@ -7,6 +7,7 @@
    - name: print inventory_hostname
      ansible.builtin.debug:
       msg: "{{ inventory_hostname }}"
+
    - name: Change Hostname on /etc/hostname
      lineinfile:
       path: /etc/hostname
@@ -19,3 +20,8 @@
    - debug: 
        var: newname.stdout  
 
+   - name: Delete Matched Lines
+     lineinfile:
+      path: /etc/hosts  
+      regexp: '^#'
+      state: absent
