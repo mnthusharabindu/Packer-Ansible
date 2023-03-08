@@ -33,4 +33,5 @@
        line: '{{item.To}}'
        state: absent
      with_items:
-     - { From: '^10', To: '^Hostfile'}
+     - { From: '^10', To: '^#Hostfile'}
+     - { From: 'Hostfile', To: 'Hostfile'}
