@@ -1,58 +1,58 @@
 #ansible-playbook -i invfile Playbooks/awscli_install.yml -vv --ask-vault-pass
 ---
-  - name: Install AWS Cli On All Servers
-    hosts: pvt
-    gather_facts: yes
-    become: yes
-    become_user: root
-    serial: 3
-    vars:
-     user_password: !vault |
-           $ANSIBLE_VAULT;1.1;AES256
-           38643936386134373935646566373335363566353738653030393834666263306339633163376533
-           6630376564366334363839393131643135636631633338360a666339623132383231653265663537
-           39303331303833636135383463383639666364616366313131316564336131343562653365666137
-           6662333066643435380a313830393639613234323762636536343837363162366635376662663966
-           3134
-    tasks:
-       - name: Create .aws folder
-         shell: mkdir -p /root/.aws
-         ignore_errors: yes
-       - name: Copy Encrypted File To /tmp
-         copy:
-           src: //home/ansibleadmin/aws_creds #This Encrypted File Must Be Created Prior To Running The Playbook.
-           dest: /tmp/aws_creds
-           owner: root
-           group: root
-           mode: '0600'
-       - name: Copy Encrypted File To .aws folder
-         copy:
-           src: //home/ansibleadmin/aws_creds #This Encrypted File Must Be Created Prior To Running The Playbook.
-           dest: /root/.aws/credentials
-           owner: root
-           group: root
-           mode: '0600'
-       - name: Replace Password Authentication To Yes
-         ansible.builtin.lineinfile:
-           path: /etc/ssh/sshd_config
-           regexp: '^PasswordAuthentication no'
-           line: PasswordAuthentication yes
-           backup: yes
-         notify:
-         -  Restart SSH Service
-       - name: Creating admin Anand
-         user:
-           name: anand
-           state: present
-           comment: Admin User Anand
-           groups: root
-           shell: /bin/bash
-           group: root
-           password: "{{ '%s' | format(user_password) | regex_replace('\n', '') | password_hash('sha512') }}"
-           password_expire_min: 1
-       - name: Check S3 Buckets
-         shell: aws s3 ls
-         register: buckets
-    handlers:
-      - name: Restart SSH Service
-        shell: service sshd restart
+- name: Install AWS Cli On All Servers
+  hosts: pvt
+  gather_facts: yes
+  become: yes
+  become_user: root
+  serial: 3
+  vars:
+    user_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      38643936386134373935646566373335363566353738653030393834666263306339633163376533
+      6630376564366334363839393131643135636631633338360a666339623132383231653265663537
+      39303331303833636135383463383639666364616366313131316564336131343562653365666137
+      6662333066643435380a313830393639613234323762636536343837363162366635376662663966
+      3134
+  tasks:
+    - name: Create .aws folder
+      shell: mkdir -p /root/.aws
+      ignore_errors: yes
+    - name: Copy Encrypted File To /tmp
+      copy:
+        src: //home/ansibleadmin/aws_creds #This Encrypted File Must Be Created Prior To Running The Playbook.
+        dest: /tmp/aws_creds
+        owner: root
+        group: root
+        mode: "0600"
+    - name: Copy Encrypted File To .aws folder
+      copy:
+        src: //home/ansibleadmin/aws_creds #This Encrypted File Must Be Created Prior To Running The Playbook.
+        dest: /root/.aws/credentials
+        owner: root
+        group: root
+        mode: "0600"
+    - name: Replace Password Authentication To Yes
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PasswordAuthentication no"
+        line: PasswordAuthentication yes
+        backup: yes
+      notify:
+        - Restart SSH Service
+    - name: Creating admin Anand
+      user:
+        name: anand
+        state: present
+        comment: Admin User Anand
+        groups: root
+        shell: /bin/bash
+        group: root
+        password: "{{ '%s' | format(user_password) | regex_replace('\n', '') | password_hash('sha512') }}"
+        password_expire_min: 1
+    - name: Check S3 Buckets
+      shell: aws s3 ls
+      register: buckets
+  handlers:
+    - name: Restart SSH Service
+      shell: service sshd restart
