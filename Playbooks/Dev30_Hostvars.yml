@@ -6,10 +6,11 @@
   gather_facts: yes
   become: yes
   become_user: root
-  vars:
-   host_name: "{{ ansible_facts['hostname'] }}"
-   ip_address: "{{ ansible_facts['eth0']['ipv4']['address'] }}"
   tasks:
+  - name: SetFacts
+    set_fact:
+      host_name: "{{ ansible_facts['hostname'] }}"
+      ip_address: "{{ ansible_facts['eth0']['ipv4']['address'] }}"
   - name: Copy Hostfile to Servers
     template: >
        src=hosts.j2
