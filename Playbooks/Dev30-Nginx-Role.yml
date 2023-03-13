@@ -1,6 +1,6 @@
-# ---
-#   - name: Install Nginx Using Ansible Role
-#     hosts: pvt
-#     roles:
-#      - nginxinstall
-#    #  - sreeveerdevops.custom_nginx
+---
+  - name: Install Nginx Using Ansible Role
+    hosts: pvt
+    roles:
+     - nginxinstall
+     - sreeveerdevops.custom_nginx
