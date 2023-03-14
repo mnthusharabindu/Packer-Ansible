@@ -1,5 +1,5 @@
 ---
-- name: Install Nginx Using Ansible Role
-  hosts: pvt
-  roles:
-    - nginxinstall
+  - name: Install Nginx Using Ansible Role
+    hosts: pvt
+    roles:
+      - nginxinstall
