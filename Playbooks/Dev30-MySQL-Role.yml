@@ -1,0 +1,6 @@
+---
+  - name: Install MySQL on Ubuntu Servers Using Ansible Role
+    hosts: pvt
+    become: yes
+    roles:
+     - { role: geerlingguy.mysql }
